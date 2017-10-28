@@ -34,6 +34,21 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+        Mvp.Model model = new Model(new RetrofitRepository(new RetrofitApi()));
+        model.getMoviesStream()
+                .subscribe(new Consumer<List<Movie>>() {
+                    @Override
+                    public void accept(List<Movie> movies) throws Exception {
+                        Log.d(TAG, "accept: ");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "accept: ");
+                    }
+                });
+        model.loadInitialData();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
