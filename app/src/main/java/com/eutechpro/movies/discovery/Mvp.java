@@ -2,6 +2,7 @@ package com.eutechpro.movies.discovery;
 
 
 import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.MvpActivityCallback;
 
 import java.util.List;
 
@@ -49,6 +50,18 @@ interface Mvp {
         void bindView(View view);
 
         /** We have to release all references to the Views or subscriptions in order to prevent mem-leaks. */
-        void unbind();
+        void unBind();
+
+        void loadInitialData();
+
+        void loadMore();
+
+        void filterByYear(int year);
+
+        void changeSortOrder(String sortType);
+
+        void openMovieDetails(long movieId);
+
+        void bindActivityCallback(MvpActivityCallback activityCallback);
     }
 }

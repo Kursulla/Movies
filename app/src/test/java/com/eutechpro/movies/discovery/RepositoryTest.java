@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-public class DiscoveryRepositoryTest {
+public class RepositoryTest {
     private static final int PAGE = 11;
     private static final int YEAR = 2011;
     private DiscoveryRepository      repository;

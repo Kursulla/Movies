@@ -139,8 +139,16 @@ public class Movie {
         this.overview = overview;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public Date getReleaseDate() {
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
+        Date             date = null;
+        try {
+            date = sdf.parse("2009-12-31");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 
     public void setReleaseDate(String releaseDate) {

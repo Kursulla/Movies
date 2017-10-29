@@ -19,7 +19,7 @@ public interface DiscoveryRepository {
         public @interface Type {
         }
 
-        String DEFAULT = "popularity.asc";
+        String DEFAULT = "popularity.desc";
 
         String POPULARITY_ASC    = "popularity.asc";
         String POPULARITY_DESC   = "popularity.desc";

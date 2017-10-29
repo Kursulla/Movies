@@ -3,6 +3,7 @@ package com.eutechpro.movies.discovery;
 
 import com.eutechpro.movies.Movie;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import io.reactivex.subjects.PublishSubject;
 class Model implements Mvp.Model {
     private PublishSubject<List<Movie>> moviesStream;
     private DiscoveryRepository         repository;
-    private int                         page;
+    private List<Movie>                 fetchedMovies;
+    private int page = 1;
     private int                         year;
     private String                      sortType;
 
@@ -21,6 +23,7 @@ class Model implements Mvp.Model {
         this.moviesStream = PublishSubject.create();
         this.year = Calendar.getInstance().get(Calendar.YEAR);
         this.sortType = DiscoveryRepository.Sort.DEFAULT;
+        this.fetchedMovies = new ArrayList<>();
     }
 
     @Override
@@ -30,7 +33,11 @@ class Model implements Mvp.Model {
 
     @Override
     public void loadInitialData() {
-        fetchMovies();
+        if(fetchedMovies.isEmpty()){
+            fetchMovies();
+        }else{
+            moviesStream.onNext(fetchedMovies);
+        }
     }
 
     @Override
@@ -40,7 +47,7 @@ class Model implements Mvp.Model {
     }
 
     @Override
-    public void changeSortOrder(String sortType) {
+    public void changeSortOrder(String sortType) {//todo sorting now works only against Repository. It has to be made to work on already fetched data
         this.sortType = sortType;
         fetchMovies();
     }
@@ -48,11 +55,19 @@ class Model implements Mvp.Model {
     @Override
     public void loadNextPage() {
         page++;
-        fetchMovies();
+        repository.discoverMoviesByYear(year, sortType, page)
+                .subscribe(movies -> {
+                    fetchedMovies.addAll(movies);
+                    moviesStream.onNext(fetchedMovies);
+                });
     }
 
     private void fetchMovies() {
         repository.discoverMoviesByYear(year, sortType, page)
-                .subscribe(movies -> moviesStream.onNext(movies));
+                .subscribe(movies -> {
+                    fetchedMovies.clear();
+                    fetchedMovies.addAll(movies);
+                    moviesStream.onNext(fetchedMovies);
+                });
     }
 }

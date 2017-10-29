@@ -16,12 +16,13 @@ import io.reactivex.Observable;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
 public class ModelTest {
-    private static final int    DEFAULT_PAGE = 0;
+    private static final int    DEFAULT_PAGE = 1;
     private static final int    DEFAULT_YEAR = 2017;
     private static final String DEFAULT_SORT = DiscoveryRepository.Sort.DEFAULT;
     private static final int    ANOTHER_YEAR = 2020;
@@ -37,7 +38,7 @@ public class ModelTest {
 
     private TestConsumer<List<Movie>> testConsumer;
     private Mvp.Model                 model;
-    
+
 
     @Before
     public void setUp() throws Exception {
@@ -57,7 +58,7 @@ public class ModelTest {
         model.loadInitialData();
 
         verify(repository).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE);
-        verifyDataValidity();
+        verifyDataValidity(movies.size());
     }
 
 
@@ -65,32 +66,36 @@ public class ModelTest {
     public void filterByYear() throws Exception {
         model.filterByYear(ANOTHER_YEAR);
         verify(repository).discoverMoviesByYear(ANOTHER_YEAR, DEFAULT_SORT, DEFAULT_PAGE);
-        verifyDataValidity();
+        verifyDataValidity(movies.size());
     }
 
     @Test
     public void changeSortOrder() throws Exception {
         model.changeSortOrder(ANOTHER_SORT);
         verify(repository).discoverMoviesByYear(DEFAULT_YEAR, ANOTHER_SORT, DEFAULT_PAGE);
-        verifyDataValidity();
+        verifyDataValidity(movies.size());
     }
 
     @Test
     public void loadNextPage() throws Exception {
-        model.loadNextPage();
-        verify(repository).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE + 1);
-        verifyDataValidity();
+        //Given
+        model.loadInitialData();
+        verify(repository, times(1)).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE);
 
-
+        //When
         model.loadNextPage();
-        verify(repository).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE + 2);
-        verifyDataValidity();
+        verify(repository, times(1)).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE + 1);
+        model.loadNextPage();
+
+        //Then
+        verify(repository, times(1)).discoverMoviesByYear(DEFAULT_YEAR, DEFAULT_SORT, DEFAULT_PAGE + 2);
+        verifyDataValidity(6);
     }
 
-    private void verifyDataValidity() {
+    private void verifyDataValidity(int size) {
         testConsumer.assertNotComplete();
         testConsumer.assertNoErrors();
-        assertEquals(movies.size(), testConsumer.getContent().size());
+        assertEquals(size, testConsumer.getContent().size());
         assertEquals(movie1, testConsumer.getContent().get(0));
         assertEquals(movie2, testConsumer.getContent().get(1));
     }
