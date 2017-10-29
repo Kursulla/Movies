@@ -1,140 +1,49 @@
 package com.eutechpro.movies.discovery;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.R;
+import com.eutechpro.movies.DrawerActivity;
 
-import java.util.List;
-
-import io.reactivex.functions.Consumer;
-
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends DrawerActivity {
 
     public static final String TAG = "MainActivity";
 
+    private Mvp.Presenter presenter;
+    private Mvp.View      view;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-
-        Mvp.Model model = new Model(new RetrofitRepository(new RetrofitApi()));
-        model.getMoviesStream()
-                .subscribe(new Consumer<List<Movie>>() {
-                    @Override
-                    public void accept(List<Movie> movies) throws Exception {
-                        Log.d(TAG, "accept: ");
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.d(TAG, "accept: ");
-                    }
-                });
-        model.loadInitialData();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DiscoveryRepository repository = new RetrofitRepository(new RetrofitApi());
-                repository.discoverMoviesByYear(2016, DiscoveryRepository.Sort.POPULARITY_ASC, 1)
-                        .subscribe(new Consumer<List<Movie>>() {
-                            @Override
-                            public void accept(List<Movie> movies) throws Exception {
-                                Log.d(TAG, "accept: ");
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Log.e(TAG, "accept: ", throwable);
-                            }
-                        });
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_drawer);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
+        if (getLastCustomNonConfigurationInstance() == null){
+            presenter = new Presenter(new Model(new RetrofitRepository(new RetrofitApi())));
         } else {
-            super.onBackPressed();
+            presenter = (Mvp.Presenter) getLastCustomNonConfigurationInstance();
         }
+        view = new View(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    protected void onResume() {
+        super.onResume();
+        view.bindPresenter(presenter);
+        view.bindActivityCallback(this);
+        presenter.bindActivityCallback(this);
+        presenter.bindView(view);
+        presenter.loadInitialData();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings){
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onPause() {
+        super.onPause();
+        presenter.unBind();
+        view.unBind();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera){
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery){
-
-        } else if (id == R.id.nav_slideshow){
-
-        } else if (id == R.id.nav_manage){
-
-        } else if (id == R.id.nav_share){
-
-        } else if (id == R.id.nav_send){
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
     }
+
+
 }

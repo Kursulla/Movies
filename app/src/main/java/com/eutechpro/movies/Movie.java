@@ -3,9 +3,14 @@ package com.eutechpro.movies;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Movie {
+    private static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
     @SerializedName("vote_count")
     private int     voteCount;
     @SerializedName("id")
@@ -155,4 +160,17 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    public String getHorizontalImageUrl() {
+        if (backdropPath == null){
+            return null;
+        }
+        return BASE_IMAGE_URL + backdropPath;
+    }
+
+    public String getVerticalImageUrl() {
+        if (posterPath == null){
+            return null;
+        }
+        return BASE_IMAGE_URL + posterPath;
+    }
 }

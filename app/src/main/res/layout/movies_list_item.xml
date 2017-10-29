@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_s"
+    >
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_s"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+        
+        <TextView
+            android:id="@+id/name"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:maxLines="4"
+            android:padding="@dimen/padding_l"
+            android:textColor="@color/grey"
+            tools:text="Star Wars: The Force Awakens Star Wars: The Force Awakens"
+            />
+        
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/movie_list_item_transparent"
+            />
+        
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/black_opacity"
+            android:textColor="@color/white"
+            android:padding="@dimen/padding_xs"
+            tools:text="7.4"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

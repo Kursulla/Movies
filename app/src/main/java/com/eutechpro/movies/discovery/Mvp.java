@@ -43,6 +43,14 @@ interface Mvp {
     interface View {
         /** We need to bind View with a Presenter in order to have Bi-Directional communication. */
         void bindPresenter(Presenter presenter);
+
+        void drawMovies(List<Movie> movies);
+
+        void showError();
+
+        void bindActivityCallback(MvpActivityCallback activityCallback);
+
+        void unBind();
     }
 
     interface Presenter {

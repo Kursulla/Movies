@@ -1,7 +1,10 @@
 package com.eutechpro.movies.discovery;
 
 
+import android.os.Bundle;
+
 import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.details.MovieDetailsActivity;
 import com.eutechpro.movies.MvpActivityCallback;
 
 import java.util.List;
@@ -25,6 +28,7 @@ class Presenter implements Mvp.Presenter {
     @Override
     public void bindView(Mvp.View view) {
         this.view = view;
+
         Disposable disposable = this.model.getMoviesStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Movie>>() {
@@ -69,7 +73,9 @@ class Presenter implements Mvp.Presenter {
 
     @Override
     public void openMovieDetails(long movieId) {
-        //todo I need ActivityCallback here
+        Bundle bundle = new Bundle();
+        bundle.putLong(MovieDetailsActivity.MOVIE_ID_KEY, movieId);
+        activityCallback.openActivity(bundle, MovieDetailsActivity.class, false);
     }
 
     @Override
