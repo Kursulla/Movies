@@ -39,6 +39,12 @@ public class Movie {
     private String  overview;
     @SerializedName("release_date")
     private String  releaseDate;
+    @SerializedName("tagline")
+    private String  tagLine;
+    @SerializedName("runtime")
+    private String  duration;
+    @SerializedName("homepage")
+    private String  homepage;
 
     public int getVoteCount() {
         return voteCount;
@@ -142,6 +148,30 @@ public class Movie {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
     }
 
     public Date getReleaseDate() {
