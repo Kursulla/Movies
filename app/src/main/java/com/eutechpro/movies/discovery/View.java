@@ -4,7 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.eutechpro.movies.DrawerActivity;
+import com.eutechpro.movies.BaseActivity;
 import com.eutechpro.movies.Movie;
 import com.eutechpro.movies.MvpActivityCallback;
 import com.eutechpro.movies.R;
@@ -26,8 +26,8 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
     private GridLayoutManager         layoutManager;
     private boolean loadingAlreadyStarted = false;//Used to mark state when we initialised loadingAlreadyStarted and now waiting for a response.
 
-    public View(DrawerActivity activity) {
-        activity.setContentView(R.layout.main_layout);
+     public View(BaseActivity activity) {
+        activity.setContentView(R.layout.discovery_layout);
         initRecyclerView(activity);
 
         initInfiniteScroll();
@@ -35,7 +35,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
         initLoader(activity);
     }
 
-    private void initRecyclerView(DrawerActivity activity) {
+     private void initRecyclerView(BaseActivity activity) {
         adapter = new MoviesRecyclerViewAdapter(activity);
         adapter.setOnListItemClickListener(movie -> presenter.openMovieDetails(movie.getId()));
 
@@ -64,7 +64,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
         }));
     }
 
-    private void initLoader(DrawerActivity activity) {
+     private void initLoader(BaseActivity activity) {
         swipeRefreshLayout = activity.findViewById(R.id.swipe_to_refresh);
         swipeRefreshLayout.setEnabled(false);
         showLoader();

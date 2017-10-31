@@ -2,11 +2,11 @@ package com.eutechpro.movies.discovery;
 
 import android.os.Bundle;
 
-import com.eutechpro.movies.DrawerActivity;
+import com.eutechpro.movies.BaseActivity;
 
-public class MainActivity extends DrawerActivity {
+public class DiscoveryActivity extends BaseActivity {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "DiscoveryActivity";
 
     private Mvp.Presenter presenter;
     private Mvp.View      view;
