@@ -1,6 +1,7 @@
 package com.eutechpro.movies;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 
@@ -11,6 +12,7 @@ import android.support.annotation.StringRes;
  * <br/>
  * Most common use case is launching another activity, launching system dialogs...
  */
+@SuppressWarnings("SameParameterValue")
 public interface MvpActivityCallback {
     /**
      * Show toast with appropriate String resource as message. <br/>
@@ -33,4 +35,9 @@ public interface MvpActivityCallback {
      * In case we need a result from following operation, we can set request code.
      */
     void openActivity(Bundle bundle, int requestCode, Class activityClass, boolean shouldKillActivity);
+
+    /**
+     * "Fire" desired Intent!
+     */
+    void openActivity(Intent intent, boolean shouldKillActivity);
 }

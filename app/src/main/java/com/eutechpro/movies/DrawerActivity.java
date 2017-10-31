@@ -15,10 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-
+@Deprecated
 @SuppressLint("Registered")
 public class DrawerActivity extends AppCompatActivity implements MvpActivityCallback, NavigationView.OnNavigationItemSelectedListener {
-    protected NavigationView       navigationView;
+    private   NavigationView       navigationView;
     protected FloatingActionButton fab;
     private   DrawerLayout         drawer;
 
@@ -105,6 +105,12 @@ public class DrawerActivity extends AppCompatActivity implements MvpActivityCall
         Intent intent = new Intent(this, activityClass);
         intent.putExtras(bundle);
         startActivityForResult(intent, requestCode);
+        killIfNeeded(shouldKillActivity);
+    }
+
+    @Override
+    public void openActivity(Intent intent, boolean shouldKillActivity) {
+        startActivity(intent);
         killIfNeeded(shouldKillActivity);
     }
 

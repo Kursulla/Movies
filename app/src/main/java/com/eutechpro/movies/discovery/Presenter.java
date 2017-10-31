@@ -3,22 +3,18 @@ package com.eutechpro.movies.discovery;
 
 import android.os.Bundle;
 
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.details.MovieDetailsActivity;
 import com.eutechpro.movies.MvpActivityCallback;
-
-import java.util.List;
+import com.eutechpro.movies.details.MovieDetailsActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 class Presenter implements Mvp.Presenter {
     private MvpActivityCallback activityCallback;
     private Mvp.View            view;
-    private Mvp.Model           model;
-    private CompositeDisposable compositeDisposable;
+    private final Mvp.Model           model;
+    private final CompositeDisposable compositeDisposable;
 
     public Presenter(Mvp.Model model) {
         this.model = model;
@@ -31,17 +27,10 @@ class Presenter implements Mvp.Presenter {
 
         Disposable disposable = this.model.getMoviesStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Movie>>() {
-                    @Override
-                    public void accept(List<Movie> movies) throws Exception {
-                        view.drawMovies(movies);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        view.showError();
-                    }
-                });
+                .subscribe(
+                        movies -> view.drawMovies(movies),
+                        throwable -> view.showError()
+                );
         compositeDisposable.add(disposable);
     }
 

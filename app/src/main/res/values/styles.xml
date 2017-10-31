@@ -13,7 +13,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+    
+    <style name="AppTheme.ExpandedToolbar" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    
     <style name="AppTheme.AppBarOverlay"
            parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
