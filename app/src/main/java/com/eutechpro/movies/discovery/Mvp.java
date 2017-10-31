@@ -1,6 +1,7 @@
 package com.eutechpro.movies.discovery;
 
 
+import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.Movie;
 import com.eutechpro.movies.MvpActivityCallback;
 
@@ -38,6 +39,8 @@ interface Mvp {
          * @param sortType Sort type.
          */
         void changeSortOrder(String sortType);
+
+        void filterByGenre(Genre genre);
     }
 
     interface View {
@@ -71,5 +74,7 @@ interface Mvp {
         void openMovieDetails(long movieId);
 
         void bindActivityCallback(MvpActivityCallback activityCallback);
+
+        void filterByGenre(Genre genre);
     }
 }

@@ -8,6 +8,7 @@
     <!--Discovery domain-->
     <string name="discovery_error_loading">There was an error in loading data</string>
     
+    
     <!-- Details domain-->
     <string name="details_duration_lbl">Duration:</string>
     <string name="details_overview_lbl">Overview:</string>
@@ -16,4 +17,6 @@
     <string name="details_error_toast">Unable to get details. Please, try again</string>
     <string name="details_release_date_format">MMMM, yyyy</string>
     <string name="details_duration_format">%02d:%02d</string>
+    
+    
 </resources>

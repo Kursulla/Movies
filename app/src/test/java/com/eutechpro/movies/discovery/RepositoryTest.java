@@ -24,8 +24,9 @@ import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
 public class RepositoryTest {
-    private static final int PAGE = 11;
-    private static final int YEAR = 2011;
+    private static final int PAGE     = 11;
+    private static final int YEAR     = 2011;
+    private static final int GENRE_ID = 28;
     private DiscoveryRepository      repository;
     @Mock
     private DiscoveryApi             api;
@@ -47,7 +48,7 @@ public class RepositoryTest {
     public void testParametersSetting() throws Exception {
         ArgumentCaptor<Map<String, String>> captor = forClass(HashMap.class);
 
-        repository.discoverMoviesByYear(YEAR, DiscoveryRepository.Sort.REVENUE_ASC, PAGE);
+        repository.discoverMovies(YEAR, GENRE_ID, DiscoveryRepository.Sort.REVENUE_ASC, PAGE);
 
         verify(api).fetchMovies(captor.capture());
         Map<String, String> params = captor.getValue();
@@ -59,7 +60,7 @@ public class RepositoryTest {
     @Test
     public void testMappingResponse() throws Exception {
         TestConsumer<List<Movie>> testConsumer = new TestConsumer();
-        repository.discoverMoviesByYear(YEAR, DiscoveryRepository.Sort.DEFAULT, PAGE).subscribe(testConsumer);
+        repository.discoverMovies(YEAR, GENRE_ID, DiscoveryRepository.Sort.DEFAULT, PAGE).subscribe(testConsumer);
         testConsumer.awaitCount(1, BaseTestConsumer.TestWaitStrategy.SLEEP_10MS,500);
 
         assertEquals(movies, testConsumer.getContent());

@@ -14,26 +14,51 @@ import java.util.List;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
  class View implements Mvp.View {
-    private static final int     NUMBER_OF_COLUMN_PORTRAIT   = 2;
-    private static final int     NUMBER_OF_COLUMNS_LANDSCAPE = 4;
-    private static final boolean DO_NO_KILL_ACTIVITY         = false;
+     private static final int     NUMBER_OF_COLUMN_PORTRAIT   = 2;
+     private static final int     NUMBER_OF_COLUMNS_LANDSCAPE = 4;
+     private static final boolean DO_NO_KILL_ACTIVITY         = false;
+     private static final String  TAG                         = "View";
 
-    private MvpActivityCallback       activityCallback;
-    private Mvp.Presenter             presenter;
-    private MoviesRecyclerViewAdapter adapter;
-    private SwipeRefreshLayout        swipeRefreshLayout;
-    private RecyclerView              recyclerView;
-    private GridLayoutManager         layoutManager;
+     private MvpActivityCallback       activityCallback;
+     private Mvp.Presenter             presenter;
+     private MoviesRecyclerViewAdapter adapter;
+     private SwipeRefreshLayout        swipeRefreshLayout;
+     private RecyclerView              recyclerView;
+     private GridLayoutManager         layoutManager;
     private boolean loadingAlreadyStarted = false;//Used to mark state when we initialised loadingAlreadyStarted and now waiting for a response.
+     private YearSelector   yearSelector;
+     private GenresSelector genresSelector;
 
      public View(BaseActivity activity) {
         activity.setContentView(R.layout.discovery_layout);
+
+         initYearSelector(activity);
+
+         initGenresSelector(activity);
+
         initRecyclerView(activity);
 
         initInfiniteScroll();
 
         initLoader(activity);
     }
+
+     private void initYearSelector(BaseActivity activity) {
+         yearSelector = activity.findViewById(R.id.year_selector);
+         yearSelector.setOnYearSelectedListener(year -> {
+             showLoader();
+             presenter.filterByYear(year == null ? 0 : year);
+         });
+     }
+
+     private void initGenresSelector(BaseActivity activity) {
+         genresSelector = activity.findViewById(R.id.genres_selector);
+         genresSelector.setOnGenreSelectedListener(genre -> {
+             showLoader();
+             presenter.filterByGenre(genre);
+         });
+
+     }
 
      private void initRecyclerView(BaseActivity activity) {
         adapter = new MoviesRecyclerViewAdapter(activity);
@@ -84,6 +109,8 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
     public void unBind() {
         this.activityCallback = null;
         this.presenter = null;
+        this.yearSelector.setOnYearSelectedListener(null);
+        this.genresSelector.setOnGenreSelectedListener(null);
     }
 
     @Override

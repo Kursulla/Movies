@@ -3,6 +3,7 @@ package com.eutechpro.movies.discovery;
 
 import android.os.Bundle;
 
+import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.MvpActivityCallback;
 import com.eutechpro.movies.details.MovieDetailsActivity;
 
@@ -11,6 +12,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 class Presenter implements Mvp.Presenter {
+    public static final boolean KEEP_ACTIVITY = false;
     private MvpActivityCallback activityCallback;
     private Mvp.View            view;
     private final Mvp.Model           model;
@@ -28,7 +30,9 @@ class Presenter implements Mvp.Presenter {
         Disposable disposable = this.model.getMoviesStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        movies -> view.drawMovies(movies),
+                        movies -> {
+                            view.drawMovies(movies);
+                        },
                         throwable -> view.showError()
                 );
         compositeDisposable.add(disposable);
@@ -56,20 +60,25 @@ class Presenter implements Mvp.Presenter {
     }
 
     @Override
+    public void filterByGenre(Genre genre) {
+        model.filterByGenre(genre);
+    }
+    @Override
     public void changeSortOrder(String sortType) {
-        model.changeSortOrder(sortType);
+        //tbd
     }
 
     @Override
     public void openMovieDetails(long movieId) {
         Bundle bundle = new Bundle();
         bundle.putLong(MovieDetailsActivity.MOVIE_ID_KEY, movieId);
-        activityCallback.openActivity(bundle, MovieDetailsActivity.class, false);
+        activityCallback.openActivity(bundle, MovieDetailsActivity.class, KEEP_ACTIVITY);
     }
 
     @Override
     public void bindActivityCallback(MvpActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
+
 
 }

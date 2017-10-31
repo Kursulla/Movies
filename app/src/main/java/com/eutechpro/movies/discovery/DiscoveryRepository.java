@@ -11,12 +11,12 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public interface DiscoveryRepository {
-    Observable<List<Movie>> discoverMoviesByYear(int year, @Sort.Type String sortType, int page);
+    Observable<List<Movie>> discoverMovies(int year, int genreId, @Sort.Type String sortType, int page);
 
     interface Sort {
         @Retention(RetentionPolicy.SOURCE)
         @StringDef({DEFAULT, POPULARITY_ASC, POPULARITY_DESC, RELEASE_DATE_ASC, RELEASE_DATE_DESC, REVENUE_ASC, REVENUE_DESC, TITLE_ASC, TITLE_DESC, VOTE_AVERAGE_ASC, VOTE_AVERAGE_DESC, VOTE_COUNT_ASC, VOTE_COUNT_DESC})
-        public @interface Type {
+        @interface Type {
         }
 
         String DEFAULT = "popularity.desc";
