@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import com.eutechpro.movies.BaseActivity;
 
 public class MovieDetailsActivity extends BaseActivity {
-    public static final String TAG          = "MovieDetailsActivity";
-    public static final String MOVIE_ID_KEY = "com.eutechpro.movies.MOVIE_ID_KEY";
+    private static final String TAG          = "MovieDetailsActivity";
+    public static final  String MOVIE_ID_KEY = "com.eutechpro.movies.MOVIE_ID_KEY";
     private Mvp.Presenter presenter;
     private Mvp.View      view;
     private long          movieId;

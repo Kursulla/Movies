@@ -11,7 +11,6 @@ import com.eutechpro.movies.Movie;
 import com.eutechpro.movies.MvpActivityCallback;
 import com.eutechpro.movies.R;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -150,11 +149,5 @@ public class ViewTest {
     @Test
     public void showError() throws Exception {
         view.showError();
-
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 }

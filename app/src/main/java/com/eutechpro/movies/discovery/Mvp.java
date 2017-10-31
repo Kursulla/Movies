@@ -11,7 +11,7 @@ import io.reactivex.Observable;
 interface Mvp {
     interface Model {
         /**
-         * {@link android.database.Observable<List< com.eutechpro.movies.Movie>>} to listen on. <br/>
+         * {@link Observable} of {@link List<Movie>}to listen on. <br/>
          * All changes in data will be published via this stream.
          */
         Observable<List<Movie>> getMoviesStream();

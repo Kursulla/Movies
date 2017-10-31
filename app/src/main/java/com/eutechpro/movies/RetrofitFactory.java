@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitFactory {
     private static final String BASE_URL      = "https://api.themoviedb.org/3/";
     private static final String API_KEY_KEY   = "api_key";//What a retarded name!
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String API_KEY_VALUE = "b6e5d26b6b960dc0fc6b99744f9cecaf";
 
     /**
@@ -51,7 +52,7 @@ public class RetrofitFactory {
 
     private static class ApiKeyInterceptor implements Interceptor {
         @Override
-        public Response intercept(Chain chain) throws IOException {
+        public Response intercept(@NonNull Chain chain) throws IOException {
             Request original        = chain.request();
             HttpUrl originalHttpUrl = original.url();
 

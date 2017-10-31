@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity implements MvpActivityCallback {
-    public static final String TAG = "BaseActivity";
+    private static final String TAG = "BaseActivity";
 
     @Override
     public void setContentView(int layoutResID) {

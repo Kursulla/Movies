@@ -12,10 +12,10 @@ import io.reactivex.disposables.Disposable;
 class Presenter implements Mvp.Presenter {
     private static final String  IMDB_URL      = "http://www.imdb.com/title/";
     private static final boolean KEEP_ACTIVITY = false;
-    private CompositeDisposable compositeDisposable;
-    private Mvp.View            view;
-    private Mvp.Model           model;
-    private MvpActivityCallback activityCallback;
+    private final CompositeDisposable compositeDisposable;
+    private       Mvp.View            view;
+    private final Mvp.Model           model;
+    private       MvpActivityCallback activityCallback;
 
     public Presenter(Mvp.Model model) {
         this.model = model;

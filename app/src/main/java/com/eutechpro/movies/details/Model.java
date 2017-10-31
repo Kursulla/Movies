@@ -3,7 +3,6 @@ package com.eutechpro.movies.details;
 import com.eutechpro.movies.Movie;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
@@ -28,12 +27,9 @@ class Model implements Mvp.Model {
             detailsStream.onNext(fetchedMovie);
             return;
         }
-        api.fetchMovieDetails(movieId).subscribe(new Consumer<Movie>() {
-            @Override
-            public void accept(Movie movie) throws Exception {
-                fetchedMovie = movie;
-                detailsStream.onNext(fetchedMovie);
-            }
+        api.fetchMovieDetails(movieId).subscribe(movie -> {
+            fetchedMovie = movie;
+            detailsStream.onNext(fetchedMovie);
         });
     }
 }

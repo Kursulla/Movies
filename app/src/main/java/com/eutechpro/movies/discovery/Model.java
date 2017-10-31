@@ -11,9 +11,9 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
-    private PublishSubject<List<Movie>> moviesStream;
-    private DiscoveryRepository         repository;
-    private List<Movie>                 fetchedMovies;
+    private final PublishSubject<List<Movie>> moviesStream;
+    private final DiscoveryRepository         repository;
+    private final List<Movie>                 fetchedMovies;
     private int page = 1;
     private int                         year;
     private String                      sortType;

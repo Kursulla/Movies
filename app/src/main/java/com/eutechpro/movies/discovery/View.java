@@ -111,7 +111,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
      */
     private static class ListReachedEndScroller extends RecyclerView.OnScrollListener {
         private final GridLayoutManager  layoutManager;
-        private       EndReachedListener listener;
+        private final EndReachedListener listener;
 
         ListReachedEndScroller(GridLayoutManager layoutManager, EndReachedListener listener) {
             this.layoutManager = layoutManager;

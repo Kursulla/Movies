@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 
 public class ModelTest {
-    public static final int MOVIE_ID = 111;
+    private static final int MOVIE_ID = 111;
     private Mvp.Model model;
     @Mock
     private RetrofitApi api;

@@ -12,6 +12,7 @@ import android.support.annotation.StringRes;
  * <br/>
  * Most common use case is launching another activity, launching system dialogs...
  */
+@SuppressWarnings("SameParameterValue")
 public interface MvpActivityCallback {
     /**
      * Show toast with appropriate String resource as message. <br/>

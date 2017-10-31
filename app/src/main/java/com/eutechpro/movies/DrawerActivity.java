@@ -18,7 +18,7 @@ import android.widget.Toast;
 @Deprecated
 @SuppressLint("Registered")
 public class DrawerActivity extends AppCompatActivity implements MvpActivityCallback, NavigationView.OnNavigationItemSelectedListener {
-    protected NavigationView       navigationView;
+    private   NavigationView       navigationView;
     protected FloatingActionButton fab;
     private   DrawerLayout         drawer;
 

@@ -94,7 +94,7 @@ public class ViewTest {
         movie.setId(index);
         movie.setOriginalTitle("testTitle_" + index);
         movie.setVoteAverage(1.1 + index);
-        movie.setPosterPath("qvhlhfrjJZE0K9XOwAjvirBdcRk.jpg");
+        movie.setPosterPath("http://some_path.jpg");
 
         return movie;
     }
