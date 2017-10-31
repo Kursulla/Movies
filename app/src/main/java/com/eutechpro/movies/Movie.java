@@ -3,12 +3,10 @@ package com.eutechpro.movies;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+@SuppressWarnings("ALL")
 public class Movie {
     private static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
     @SerializedName("vote_count")
@@ -31,6 +29,8 @@ public class Movie {
     private String  originalTitle;
     @SerializedName("genre_ids")
     private List<Integer> genreIds = null;
+    @SerializedName("genres")
+    private List<Genre>   genres   = null;
     @SerializedName("backdrop_path")
     private String  backdropPath;
     @SerializedName("adult")
@@ -38,13 +38,15 @@ public class Movie {
     @SerializedName("overview")
     private String  overview;
     @SerializedName("release_date")
-    private String  releaseDate;
+    private Date    releaseDate;
     @SerializedName("tagline")
     private String  tagLine;
     @SerializedName("runtime")
-    private String  duration;
+    private int     duration;
     @SerializedName("homepage")
     private String  homepage;
+    @SerializedName("imdb_id")
+    private String  imdbId;
 
     public int getVoteCount() {
         return voteCount;
@@ -126,6 +128,14 @@ public class Movie {
         this.genreIds = genreIds;
     }
 
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
     public String getBackdropPath() {
         return backdropPath;
     }
@@ -158,11 +168,11 @@ public class Movie {
         return tagLine;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -174,19 +184,19 @@ public class Movie {
         this.homepage = homepage;
     }
 
-    public Date getReleaseDate() {
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
-        Date             date = null;
-        try {
-            date = sdf.parse("2009-12-31");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return date;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

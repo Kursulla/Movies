@@ -57,6 +57,13 @@ interface Mvp {
         /** We need to bind Presenter with a View in order to have Bi-Directional communication. */
         void bindView(View view);
 
+        /**
+         * Sometimes we need some action from an Activity. This is assignment to this callback.
+         *
+         * @param activityCallback Callback to reach Activity from a presenter.
+         */
+        void bindActivityCallback(MvpActivityCallback activityCallback);
+
         /** We have to release all references to the Views or subscriptions in order to prevent mem-leaks. */
         void unBind();
 
@@ -66,5 +73,14 @@ interface Mvp {
          * @param movieId ID of a movie we want to load.
          */
         void loadInitialData(long movieId);
+
+        /**
+         * Open default browser with provided URL;
+         *
+         * @param url URL to open in default browser.
+         */
+        void openHomePage(String url);
+
+        void openImdbPage(String imdbId);
     }
 }

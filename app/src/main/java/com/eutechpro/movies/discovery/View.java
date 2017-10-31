@@ -13,7 +13,7 @@ import java.util.List;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
-public class View implements Mvp.View {
+ class View implements Mvp.View {
     private static final int     NUMBER_OF_COLUMN_PORTRAIT   = 2;
     private static final int     NUMBER_OF_COLUMNS_LANDSCAPE = 4;
     private static final boolean DO_NO_KILL_ACTIVITY         = false;

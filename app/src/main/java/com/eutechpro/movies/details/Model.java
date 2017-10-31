@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
-public class Model implements Mvp.Model {
+class Model implements Mvp.Model {
     private RetrofitApi           api;
     private PublishSubject<Movie> detailsStream;
     private Movie                 fetchedMovie;

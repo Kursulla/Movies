@@ -1,6 +1,7 @@
 package com.eutechpro.movies.details;
 
 import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.MvpActivityCallback;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,13 +18,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PresenterTest {
-    public static final int MOVIE_ID = 111;
+    private static final int MOVIE_ID = 111;
     @Mock
-    private Mvp.View  view;
+    private Mvp.View            view;
     @Mock
-    private Mvp.Model model;
+    private Mvp.Model           model;
     @Mock
-    private Movie     movie;
+    private Movie               movie;
+    @Mock
+    private MvpActivityCallback callback;
 
     private Mvp.Presenter presenter;
 
@@ -32,6 +35,7 @@ public class PresenterTest {
         MockitoAnnotations.initMocks(this);
         RxAndroidPlugins.setInitMainThreadSchedulerHandler(__ -> Schedulers.trampoline());
         presenter = new Presenter(model);
+        presenter.bindActivityCallback(callback);
     }
 
     @Test
@@ -43,7 +47,6 @@ public class PresenterTest {
 
         verify(view).drawMovieDetails(movie);
         verify(view, never()).showError();
-
     }
 
     @Test
