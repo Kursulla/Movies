@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.eutechpro.movies.BaseActivity;
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
      private static final boolean DO_NO_KILL_ACTIVITY         = false;
      private static final String  TAG                         = "View";
 
-     private MvpActivityCallback       activityCallback;
+     private MvpViewActivityCallback   activityCallback;
      private Mvp.Presenter             presenter;
      private MoviesRecyclerViewAdapter adapter;
      private SwipeRefreshLayout        swipeRefreshLayout;
@@ -101,7 +101,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
     }
 
     @Override
-    public void bindActivityCallback(MvpActivityCallback activityCallback) {
+    public void bindActivityCallback(MvpViewActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
 

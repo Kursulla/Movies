@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
+
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity implements MvpActivityCallback {
+public class BaseActivity extends AppCompatActivity implements MvpViewActivityCallback, MvpPresenterActivityCallback {
     private static final String TAG = "BaseActivity";
 
     @Override

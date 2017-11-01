@@ -12,7 +12,7 @@ import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.GlideApp;
 import com.eutechpro.movies.GlideRequests;
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ class View implements Mvp.View {
     private static final boolean CLOSE_ACTIVITY = true;
     private       Resources               resources;
     private       Mvp.Presenter           presenter;
-    private       MvpActivityCallback     activityCallback;
+    private       MvpViewActivityCallback activityCallback;
     private final ImageView               image;
     private final ImageView               homePageBtn;
     private final ImageView               imdbBtn;
@@ -67,7 +67,7 @@ class View implements Mvp.View {
     }
 
     @Override
-    public void bindActivityCallback(MvpActivityCallback activityCallback) {
+    public void bindActivityCallback(MvpViewActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
 
@@ -116,7 +116,7 @@ class View implements Mvp.View {
     @Override
     public void showError() {
         if (activityCallback == null){
-            throw new IllegalStateException("Ypu have to provide instance of the MvpActivityCallback!");
+            throw new IllegalStateException("Ypu have to provide instance of the MvpViewActivityCallback!");
         }
         activityCallback.showToast(R.string.details_error_toast, CLOSE_ACTIVITY);
     }

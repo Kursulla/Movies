@@ -1,7 +1,7 @@
 package com.eutechpro.movies.details;
 
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.when;
 public class PresenterTest {
     private static final int MOVIE_ID = 111;
     @Mock
-    private Mvp.View            view;
+    private Mvp.View                view;
     @Mock
-    private Mvp.Model           model;
+    private Mvp.Model               model;
     @Mock
-    private Movie               movie;
+    private Movie                   movie;
     @Mock
-    private MvpActivityCallback callback;
+    private MvpViewActivityCallback callback;
 
     private Mvp.Presenter presenter;
 

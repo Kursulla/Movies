@@ -8,7 +8,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.eutechpro.movies.BaseActivity;
 import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
 
 import org.junit.Before;
@@ -52,11 +52,11 @@ public class ViewTest {
     @Rule
     public               ActivityTestRule<BaseActivity> activityTestRule      = new ActivityTestRule<>(BaseActivity.class);
 
-    private Mvp.View            view;
+    private Mvp.View                view;
     @Mock
-    private Mvp.Presenter       presenter;
+    private Mvp.Presenter           presenter;
     @Mock
-    private MvpActivityCallback callback;
+    private MvpViewActivityCallback callback;
 
     @Before
     public void setUp() throws Throwable {

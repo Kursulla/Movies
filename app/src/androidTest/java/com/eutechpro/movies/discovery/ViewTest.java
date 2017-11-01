@@ -6,7 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.eutechpro.movies.BaseActivity;
 import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
 
 import org.junit.Before;
@@ -39,12 +39,12 @@ public class ViewTest {
     @Rule
     public ActivityTestRule<BaseActivity> activityTestRule = new ActivityTestRule<>(BaseActivity.class);
 
-    private Mvp.View            view;
+    private Mvp.View                view;
     @Mock
-    private Mvp.Presenter       presenter;
+    private Mvp.Presenter           presenter;
     @Mock
-    private MvpActivityCallback callback;
-    private List<Movie>         movies;
+    private MvpViewActivityCallback callback;
+    private List<Movie>             movies;
 
     @Before
     public void setUp() throws Throwable {
@@ -68,7 +68,7 @@ public class ViewTest {
     }
 
     @Test
-    public void drawMovies() throws Throwable {
+    public void testDrawingMovies() throws Throwable {
 
         activityTestRule.runOnUiThread(() -> view.drawMovies(movies));
 
@@ -111,7 +111,7 @@ public class ViewTest {
 
     @Test
     public void testInfiniteScroll() throws Throwable {//todo fck RecyclerView!!! resolve later
-//        activityTestRule.runOnUiThread(() -> view.drawMovies(movies));
+//        activityTestRule.runOnUiThread(() -> view.testDrawingMovies(movies));
 //
 //        onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(8));
 //

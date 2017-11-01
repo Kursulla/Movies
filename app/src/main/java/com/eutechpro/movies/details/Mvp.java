@@ -1,8 +1,11 @@
 package com.eutechpro.movies.details;
 
 
+import android.app.Activity;
+
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import io.reactivex.Observable;
 
@@ -28,14 +31,16 @@ interface Mvp {
         void bindPresenter(Presenter presenter);
 
         /**
-         * Sometimes we need some action from an Activity. This is assignment to this callback.
+         * Bind this view with instance of {@link MvpViewActivityCallback}.
+         * <br/>
+         * That will enrich the View with possibilities of drawing different Android UI components
          *
-         * @param activityCallback Callback to reach Activity from a view.
+         * @param activityCallback Instance of MvpActivityCallback
          */
-        void bindActivityCallback(MvpActivityCallback activityCallback);
+        void bindActivityCallback(MvpViewActivityCallback activityCallback);
 
         /**
-         * Unbind all references so GC can do it's job.
+         * Unbind all things that might cause mem leaks.
          */
         void unBind();
 
@@ -50,7 +55,6 @@ interface Mvp {
          * In case of some error, show some info to the user.
          */
         void showError();
-
     }
 
     interface Presenter {
@@ -58,13 +62,13 @@ interface Mvp {
         void bindView(View view);
 
         /**
-         * Sometimes we need some action from an Activity. This is assignment to this callback.
+         * We might need to reach to the {@link Activity} from a Presenter.
          *
          * @param activityCallback Callback to reach Activity from a presenter.
          */
-        void bindActivityCallback(MvpActivityCallback activityCallback);
+        void bindActivityCallback(MvpPresenterActivityCallback activityCallback);
 
-        /** We have to release all references to the Views or subscriptions in order to prevent mem-leaks. */
+        /** Unbind all things that might cause mem leaks. */
         void unBind();
 
         /**
@@ -81,6 +85,11 @@ interface Mvp {
          */
         void openHomePage(String url);
 
+        /**
+         * Open default browser with IMDB page that has details about provided movie;
+         *
+         * @param url URL to open in default browser.
+         */
         void openImdbPage(String imdbId);
     }
 }

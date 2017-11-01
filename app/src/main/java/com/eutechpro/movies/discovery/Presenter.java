@@ -4,7 +4,7 @@ package com.eutechpro.movies.discovery;
 import android.os.Bundle;
 
 import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 import com.eutechpro.movies.details.MovieDetailsActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,10 +13,10 @@ import io.reactivex.disposables.Disposable;
 
 class Presenter implements Mvp.Presenter {
     public static final boolean KEEP_ACTIVITY = false;
-    private MvpActivityCallback activityCallback;
-    private Mvp.View            view;
-    private final Mvp.Model           model;
-    private final CompositeDisposable compositeDisposable;
+    private       MvpPresenterActivityCallback activityCallback;
+    private       Mvp.View                     view;
+    private final Mvp.Model                    model;
+    private final CompositeDisposable          compositeDisposable;
 
     public Presenter(Mvp.Model model) {
         this.model = model;
@@ -76,7 +76,7 @@ class Presenter implements Mvp.Presenter {
     }
 
     @Override
-    public void bindActivityCallback(MvpActivityCallback activityCallback) {
+    public void bindActivityCallback(MvpPresenterActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
 

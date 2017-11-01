@@ -3,7 +3,7 @@ package com.eutechpro.movies.details;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -12,10 +12,10 @@ import io.reactivex.disposables.Disposable;
 class Presenter implements Mvp.Presenter {
     private static final String  IMDB_URL      = "http://www.imdb.com/title/";
     private static final boolean KEEP_ACTIVITY = false;
-    private final CompositeDisposable compositeDisposable;
-    private       Mvp.View            view;
-    private final Mvp.Model           model;
-    private       MvpActivityCallback activityCallback;
+    private final CompositeDisposable          compositeDisposable;
+    private       Mvp.View                     view;
+    private final Mvp.Model                    model;
+    private       MvpPresenterActivityCallback activityCallback;
 
     public Presenter(Mvp.Model model) {
         this.model = model;
@@ -36,7 +36,7 @@ class Presenter implements Mvp.Presenter {
     }
 
     @Override
-    public void bindActivityCallback(MvpActivityCallback activityCallback) {
+    public void bindActivityCallback(MvpPresenterActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
     @Override
@@ -66,7 +66,6 @@ class Presenter implements Mvp.Presenter {
         if (!url.startsWith("http://") && !url.startsWith("https://")){
             return "http://" + url;
         }
-
         return url;
     }
 }

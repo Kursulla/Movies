@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.MvpActivityCallback;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,13 +21,13 @@ import static org.mockito.Mockito.verify;
 @RunWith(AndroidJUnit4.class)
 public class PresenterBrowserOpeningTest {
     @Mock
-    private Mvp.View            view;
+    private Mvp.View                view;
     @Mock
-    private Mvp.Model           model;
+    private Mvp.Model               model;
     @Mock
-    private Movie               movie;
+    private Movie                   movie;
     @Mock
-    private MvpActivityCallback callback;
+    private MvpViewActivityCallback callback;
 
     private Mvp.Presenter presenter;
 
