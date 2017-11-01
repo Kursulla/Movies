@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eutechpro.movies.BaseActivity;
-import com.eutechpro.movies.Genre;
 import com.eutechpro.movies.GlideApp;
 import com.eutechpro.movies.GlideRequests;
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

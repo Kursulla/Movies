@@ -3,8 +3,8 @@ package com.eutechpro.movies.discovery;
 
 import android.app.Activity;
 
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 

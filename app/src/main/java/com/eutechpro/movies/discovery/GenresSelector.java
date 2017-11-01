@@ -9,9 +9,9 @@ import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.eutechpro.movies.Genre;
+import com.eutechpro.movies.data.Genre;
 import com.eutechpro.movies.R;
-import com.eutechpro.movies.common.ResourcesUtil;
+import com.eutechpro.movies.utils.ResourcesUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

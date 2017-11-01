@@ -1,7 +1,7 @@
 package com.eutechpro.movies.discovery;
 
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
 
 import org.junit.After;
 import org.junit.Before;
@@ -128,7 +128,7 @@ public class PresenterTest {
 //        presenter.bindView(view);
 //
 //        //When
-//        presenter.changeSortOrder(DiscoveryRepository.Sort.DEFAULT);
+//        presenter.changeSortOrder(MoviesRepository.Sort.DEFAULT);
 //
 //        //Then
 //        verify(model).changeSortOrder(anyString());

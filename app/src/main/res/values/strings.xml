@@ -20,6 +20,7 @@
     
     <!--Genre selector-->
     <string name="genre_selector_default_value">Select genre</string>
+    <string name="details_loading_label">Loading...</string>
 
 
 </resources>

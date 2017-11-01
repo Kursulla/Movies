@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.eutechpro.movies.BaseActivity;
+import com.eutechpro.movies.R;
+import com.eutechpro.movies.data.RetrofitMoviesRepository;
+import com.eutechpro.movies.data.RetrofitWebApi;
 
 public class MovieDetailsActivity extends BaseActivity {
     private static final String TAG          = "MovieDetailsActivity";
@@ -23,11 +26,11 @@ public class MovieDetailsActivity extends BaseActivity {
             return;
         }
         if (getLastCustomNonConfigurationInstance() == null){
-            presenter = new Presenter(new Model(new RetrofitApi()));
+            presenter = new Presenter(new Model(new RetrofitMoviesRepository(new RetrofitWebApi())));
         } else {
             presenter = (Mvp.Presenter) getLastCustomNonConfigurationInstance();
         }
-        setTitle("Loading...");
+        setTitle(getString(R.string.details_loading_label));
     }
 
     @Override

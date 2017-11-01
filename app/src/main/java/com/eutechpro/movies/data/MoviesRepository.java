@@ -1,17 +1,36 @@
-package com.eutechpro.movies.discovery;
+package com.eutechpro.movies.data;
 
 import android.support.annotation.StringDef;
-
-import com.eutechpro.movies.Movie;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
-public interface DiscoveryRepository {
-    Observable<List<Movie>> discoverMovies(int year, int genreId, @Sort.Type String sortType, int page);
+public interface MoviesRepository {
+    /**
+     * Method for fetching list of movies based on certain filter options.
+     *
+     * @param year     Filter movies by year of release.
+     * @param genreId  Filter movies by genre.
+     * @param sortType Sort response by desired values. Can have one of {@link Sort} values.
+     * @param page     Select page of data.
+     *
+     * @return Observable of list of movies.
+     */
+    Observable<List<Movie>> fetchMovies(int year, int genreId, @Sort.Type String sortType, int page);
+
+    /**
+     * Fetch all available details about movie.
+     *
+     * @param movieId ID to identify movie
+     *
+     * @return {@link Movie} instance with all available details
+     */
+    Single<Movie> fetchMovieDetails(long movieId);
+
 
     interface Sort {
         @Retention(RetentionPolicy.SOURCE)

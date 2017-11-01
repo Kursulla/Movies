@@ -3,8 +3,9 @@ package com.eutechpro.movies.discovery;
 
 import android.util.Log;
 
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.data.MoviesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +15,20 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
-    public static final String TAG = "Model";
+    private static final String TAG = "Model";
     private final PublishSubject<List<Movie>> moviesStream;
-    private final DiscoveryRepository         repository;
+    private final MoviesRepository            repository;
     private final List<Movie>                 fetchedMovies;
     private int page = 1;
     private int    year;
     private int    genreId;
     private String sortType;
 
-    public Model(DiscoveryRepository repository) {
+    public Model(MoviesRepository repository) {
         this.repository = repository;
         this.moviesStream = PublishSubject.create();
         this.year = 0;
-        this.sortType = DiscoveryRepository.Sort.DEFAULT;
+        this.sortType = MoviesRepository.Sort.DEFAULT;
         this.fetchedMovies = new ArrayList<>();
     }
 
@@ -73,7 +74,7 @@ class Model implements Mvp.Model {
     @Override
     public void loadNextPage() {
         page++;
-        repository.discoverMovies(year, genreId, sortType, page)
+        repository.fetchMovies(year, genreId, sortType, page)
                 .subscribe(movies -> {
                     fetchedMovies.addAll(movies);
                     moviesStream.onNext(fetchedMovies);
@@ -87,7 +88,7 @@ class Model implements Mvp.Model {
     }
 
     private void fetchMovies() {
-        repository.discoverMovies(year, genreId, sortType, page)
+        repository.fetchMovies(year, genreId, sortType, page)
                 .subscribe(movies -> {
                     fetchedMovies.clear();
                     fetchedMovies.addAll(movies);

@@ -1,6 +1,6 @@
 package com.eutechpro.movies.details;
 
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Movie;
 
 import io.reactivex.Single;
 

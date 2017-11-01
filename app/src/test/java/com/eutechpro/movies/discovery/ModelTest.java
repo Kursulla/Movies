@@ -1,8 +1,9 @@
 package com.eutechpro.movies.discovery;
 
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
 import com.eutechpro.movies.TestConsumer;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.data.MoviesRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,18 +28,17 @@ public class ModelTest {
     private static final int    DEFAULT_PAGE     = 1;
     private static final int    DEFAULT_YEAR     = 0;
     private static final int    DEFAULT_GENRE_ID = 0;
-    private static final String DEFAULT_SORT     = DiscoveryRepository.Sort.DEFAULT;
+    private static final String DEFAULT_SORT     = MoviesRepository.Sort.DEFAULT;
     private static final int    ANOTHER_YEAR     = 2020;
-    private static final String ANOTHER_SORT     = DiscoveryRepository.Sort.POPULARITY_ASC;
+    private static final String ANOTHER_SORT     = MoviesRepository.Sort.POPULARITY_ASC;
 
     @Mock
-    private DiscoveryRepository repository;
-    private List<Movie>         movies;
+    private MoviesRepository          repository;
+    private List<Movie>               movies;
     @Mock
-    private Movie               movie1;
+    private Movie                     movie1;
     @Mock
-    private Movie               movie2;
-
+    private Movie                     movie2;
     private TestConsumer<List<Movie>> testConsumer;
     private Mvp.Model                 model;
 
@@ -51,40 +51,60 @@ public class ModelTest {
         movies.add(movie1);
         movies.add(movie2);
 
-        when(repository.discoverMovies(anyInt(), anyInt(), anyString(), anyInt())).thenReturn(Observable.just(movies));
+        when(repository.fetchMovies(anyInt(), anyInt(), anyString(), anyInt())).thenReturn(Observable.just(movies));
         model = new Model(repository);
         model.getMoviesStream().subscribe(testConsumer);
     }
 
     @Test
-    public void loadInitialData() throws Exception {
+    public void testLoadInitialData_once() throws Exception {
+        //When
         model.loadInitialData();
 
-        verify(repository).discoverMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
+        //Then
+        verify(repository).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
         verifyDataValidity(movies.size());
     }
 
+    @Test
+    public void testLoadInitialData_twice() throws Exception {
+        //When
+        model.loadInitialData();
+        model.loadInitialData();
+
+        //Then
+        verify(repository, times(1)).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
+        verifyDataValidity(movies.size());
+    }
 
     @Test
     public void filterByYear() throws Exception {
+        //When
         model.filterByYear(ANOTHER_YEAR);
-        verify(repository).discoverMovies(ANOTHER_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
+
+        //Then
+        verify(repository).fetchMovies(ANOTHER_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
         verifyDataValidity(movies.size());
     }
 
     @Test
     public void filterByGenre() throws Exception {
+        //Given
         Genre genre = mock(Genre.class);
         when(genre.getGenreId()).thenReturn(28);
+
+        //When
         model.filterByGenre(genre);
-        verify(repository).discoverMovies(DEFAULT_YEAR, 28, DEFAULT_SORT, DEFAULT_PAGE);
+
+        //Then
+        verify(repository).fetchMovies(DEFAULT_YEAR, 28, DEFAULT_SORT, DEFAULT_PAGE);
         verifyDataValidity(movies.size());
     }
     @Test
     public void changeSortOrder() throws Exception {
         //todo later
 //        model.changeSortOrder(ANOTHER_SORT);
-//        verify(repository).discoverMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, ANOTHER_SORT, DEFAULT_PAGE);
+//        verify(repository).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, ANOTHER_SORT, DEFAULT_PAGE);
 //        verifyDataValidity(movies.size());
     }
 
@@ -92,15 +112,15 @@ public class ModelTest {
     public void loadNextPage() throws Exception {
         //Given
         model.loadInitialData();
-        verify(repository, times(1)).discoverMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
+        verify(repository, times(1)).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE);
 
         //When
         model.loadNextPage();
-        verify(repository, times(1)).discoverMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE + 1);
+        verify(repository, times(1)).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE + 1);
         model.loadNextPage();
 
         //Then
-        verify(repository, times(1)).discoverMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE + 2);
+        verify(repository, times(1)).fetchMovies(DEFAULT_YEAR, DEFAULT_GENRE_ID, DEFAULT_SORT, DEFAULT_PAGE + 2);
         verifyDataValidity(6);
     }
 

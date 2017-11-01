@@ -3,16 +3,16 @@ package com.eutechpro.movies.discovery;
 
 import android.os.Bundle;
 
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
+import com.eutechpro.movies.data.Genre;
 import com.eutechpro.movies.details.MovieDetailsActivity;
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 class Presenter implements Mvp.Presenter {
-    public static final boolean KEEP_ACTIVITY = false;
+    private static final boolean KEEP_ACTIVITY = false;
     private       MvpPresenterActivityCallback activityCallback;
     private       Mvp.View                     view;
     private final Mvp.Model                    model;
@@ -26,7 +26,6 @@ class Presenter implements Mvp.Presenter {
     @Override
     public void bindView(Mvp.View view) {
         this.view = view;
-
         Disposable disposable = this.model.getMoviesStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

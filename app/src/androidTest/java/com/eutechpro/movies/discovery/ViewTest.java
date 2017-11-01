@@ -4,10 +4,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.eutechpro.movies.BaseActivity;
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,8 +36,15 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewTest {
+    private static final String                         EXPECTED_RATE       = "2.1";
+    private static final String                         EXPECTED_TITLE      = "testTitle_1";
+    private static final int                            EXPECTED_MOVIE_ID   = 1;
+    private static final String                         SELECTED_YEAR       = "2016";
+    private static final int                            EXPECTED_YEAR       = 2016;
+    private static final String                         SELECTED_GENRE_NAME = "Action";
+    private static final String                         EXPECTED_GENRE_NAME = "Action";
     @Rule
-    public ActivityTestRule<BaseActivity> activityTestRule = new ActivityTestRule<>(BaseActivity.class);
+    public               ActivityTestRule<BaseActivity> activityTestRule    = new ActivityTestRule<>(BaseActivity.class);
 
     private Mvp.View                view;
     @Mock
@@ -69,44 +76,52 @@ public class ViewTest {
 
     @Test
     public void testDrawingMovies() throws Throwable {
-
+        //When
         activityTestRule.runOnUiThread(() -> view.drawMovies(movies));
 
-        onView(withText("2.1")).check(matches(isDisplayed()));
-        onView(withText("testTitle_1")).check(matches(isDisplayed()));
+        //Then
+        onView(withText(EXPECTED_RATE)).check(matches(isDisplayed()));
+        onView(withText(EXPECTED_TITLE)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testOpeningDetails() throws Throwable {
+        //Given
         view.drawMovies(movies);
 
+        //When
         onView(withId(R.id.recycler_view)).perform(actionOnItemAtPosition(0, click()));
 
-        verify(presenter).openMovieDetails(1);
+        //Then
+        verify(presenter).openMovieDetails(EXPECTED_MOVIE_ID);
     }
 
     @Test
     public void testYearSelection() throws Exception {
+        //Given
         view.drawMovies(movies);
 
+        //When
         onView(withId(R.id.year_selector)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("2016"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is(SELECTED_YEAR))).perform(click());
 
-
-        verify(presenter).filterByYear(2016);
+        //Then
+        verify(presenter).filterByYear(EXPECTED_YEAR);
     }
 
     @Test
     public void testGenreSelection() throws Exception {
+        //Given
         view.drawMovies(movies);
 
+        //When
         onView(withId(R.id.genres_selector)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Action"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is(SELECTED_GENRE_NAME))).perform(click());
 
+        //Then
         ArgumentCaptor<Genre> captor = ArgumentCaptor.forClass(Genre.class);
         verify(presenter).filterByGenre(captor.capture());
-        assertEquals(28, captor.getValue().getGenreId());
-        assertEquals("Action", captor.getValue().getGenreName());
+        assertEquals(EXPECTED_GENRE_NAME, captor.getValue().getGenreName());
     }
 
     @Test

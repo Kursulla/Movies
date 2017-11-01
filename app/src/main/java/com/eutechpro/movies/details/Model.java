@@ -1,18 +1,19 @@
 package com.eutechpro.movies.details;
 
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.data.MoviesRepository;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
-    private RetrofitApi           api;
+    private MoviesRepository      repository;
     private PublishSubject<Movie> detailsStream;
     private Movie                 fetchedMovie;
 
 
-    public Model(RetrofitApi api) {
-        this.api = api;
+    public Model(MoviesRepository repository) {
+        this.repository = repository;
         this.detailsStream = PublishSubject.create();
     }
 
@@ -27,7 +28,7 @@ class Model implements Mvp.Model {
             detailsStream.onNext(fetchedMovie);
             return;
         }
-        api.fetchMovieDetails(movieId).subscribe(movie -> {
+        repository.fetchMovieDetails(movieId).subscribe(movie -> {
             fetchedMovie = movie;
             detailsStream.onNext(fetchedMovie);
         });
