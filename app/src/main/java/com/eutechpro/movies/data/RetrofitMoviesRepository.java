@@ -1,30 +1,27 @@
-package com.eutechpro.movies.discovery;
-
-import android.util.Log;
-
-import com.eutechpro.movies.Movie;
+package com.eutechpro.movies.data;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 
-public class RetrofitRepository implements DiscoveryRepository {
-    private static final String TAG         = "RetrofitRepository";
+public class RetrofitMoviesRepository implements MoviesRepository {
     private static final String SORT_BY_KEY = "sort_by";
-    private static final String YEAR_KEY    = "year";
+    private static final String YEAR_KEY    = "primary_release_year";
     private static final String GENRE_KEY   = "with_genres";
     private static final String PAGE_KEY    = "page";
-    private final DiscoveryApi api;
+    private final WebApi api;
 
-    public RetrofitRepository(DiscoveryApi api) {
+    public RetrofitMoviesRepository(WebApi api) {
         this.api = api;
     }
 
     @Override
-    public Observable<List<Movie>> discoverMovies(int year, int genreId, @Sort.Type String sortType, int page) {
+    public Observable<List<Movie>> fetchMovies(int year, int genreId, @Sort.Type String sortType, int page) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put(SORT_BY_KEY, sortType);
         if (year != 0){
@@ -36,9 +33,14 @@ public class RetrofitRepository implements DiscoveryRepository {
         parameters.put(PAGE_KEY, String.valueOf(page));
 
         return api.fetchMovies(parameters)
-                .map(response -> {
-                    Log.d(TAG, "discoverMovies: ");
-                    return response.getResults();
-                });
+                .subscribeOn(Schedulers.io())
+                .map(response -> response.getResults());
+    }
+
+    @Override
+    public Single<Movie> fetchMovieDetails(long movieId) {
+        return api
+                .fetchMovieDetails(movieId)
+                .subscribeOn(Schedulers.io());
     }
 }

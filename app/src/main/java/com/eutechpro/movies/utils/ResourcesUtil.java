@@ -1,4 +1,4 @@
-package com.eutechpro.movies.common;
+package com.eutechpro.movies.utils;
 
 import android.content.res.Resources;
 import android.support.annotation.RawRes;

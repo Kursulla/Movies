@@ -1,4 +1,4 @@
-package com.eutechpro.movies;
+package com.eutechpro.movies.data;
 
 
 import com.google.gson.annotations.SerializedName;
@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Base building entity of the app.
+ * <br/>
+ * It represents one instance of the movie in supporting web API service.
+ */
 @SuppressWarnings("ALL")
 public class Movie {
     private static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/";

@@ -1,16 +1,15 @@
-package com.eutechpro.movies.discovery;
-
-import com.eutechpro.movies.Movie;
+package com.eutechpro.movies.data;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * API for communication with "Discovery" endpoints of TheMovieDb service.
  */
-interface DiscoveryApi {
+public interface WebApi {
     /**
      * API call for fetching list of {@link Movie} searched by different parameters.<br/>
      * <b>Parameters</b> interesting for this use case are:
@@ -25,5 +24,18 @@ interface DiscoveryApi {
      *
      * @return Observable of {@link List <Movie>}
      */
-    Observable<RetrofitApi.Api.Response> fetchMovies(Map<String, String> parameters);
+    Observable<RetrofitWebApi.Api.MoviesResponse> fetchMovies(Map<String, String> parameters);
+
+    /**
+     * API call for fetching detailed information about {@link Movie}.
+     * <br/>
+     * Provided movieId will be used to query API.
+     * <br/>
+     * Keep in mind that some information might be available for one movie, but not for another.
+     *
+     * @param movieId Movie ID
+     *
+     * @return Movie entity with all available data.
+     */
+    Single<Movie> fetchMovieDetails(long movieId);
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eutechpro.movies.GlideApp;
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.R;
 
 import java.util.ArrayList;

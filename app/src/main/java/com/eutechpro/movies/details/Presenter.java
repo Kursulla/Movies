@@ -39,6 +39,7 @@ class Presenter implements Mvp.Presenter {
     public void bindActivityCallback(MvpPresenterActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
+
     @Override
     public void unBind() {
         this.view = null;

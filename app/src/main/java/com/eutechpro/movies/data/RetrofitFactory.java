@@ -1,6 +1,8 @@
-package com.eutechpro.movies;
+package com.eutechpro.movies.data;
 
 import android.support.annotation.NonNull;
+
+import com.eutechpro.movies.BuildConfig;
 
 import java.io.IOException;
 

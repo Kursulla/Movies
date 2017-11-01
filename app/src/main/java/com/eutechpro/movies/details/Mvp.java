@@ -3,7 +3,7 @@ package com.eutechpro.movies.details;
 
 import android.app.Activity;
 
-import com.eutechpro.movies.Movie;
+import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 

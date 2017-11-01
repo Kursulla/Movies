@@ -1,8 +1,11 @@
-package com.eutechpro.movies;
+package com.eutechpro.movies.data;
 
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Genre of a movie.
+ */
 public class Genre {
     @SerializedName("id")
     private int    genreId;

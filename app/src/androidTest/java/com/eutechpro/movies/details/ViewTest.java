@@ -6,10 +6,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.eutechpro.movies.BaseActivity;
-import com.eutechpro.movies.Genre;
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 import com.eutechpro.movies.R;
+import com.eutechpro.movies.data.Genre;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -144,10 +144,5 @@ public class ViewTest {
         when(movie.getHomepage()).thenReturn(TEST_HOMEPAGE);
         when(movie.getImdbId()).thenReturn(TEST_IMDB_ID);
         return movie;
-    }
-
-    @Test
-    public void showError() throws Exception {
-        view.showError();
     }
 }

@@ -1,7 +1,7 @@
 package com.eutechpro.movies.details;
 
-import com.eutechpro.movies.Movie;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
+import com.eutechpro.movies.data.Movie;
+import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.when;
 public class PresenterTest {
     private static final int MOVIE_ID = 111;
     @Mock
-    private Mvp.View                view;
+    private Mvp.View                     view;
     @Mock
-    private Mvp.Model               model;
+    private Mvp.Model                    model;
     @Mock
-    private Movie                   movie;
+    private Movie                        movie;
     @Mock
-    private MvpViewActivityCallback callback;
+    private MvpPresenterActivityCallback callback;
 
     private Mvp.Presenter presenter;
 
@@ -40,22 +40,28 @@ public class PresenterTest {
 
     @Test
     public void testLoadingInitDetails_OK() throws Exception {
+        //Given
         when(model.getMovieDetailsStream()).thenReturn(Observable.just(movie));
         presenter.bindView(view);
 
+        //When
         presenter.loadInitialData(MOVIE_ID);
 
+        //Then
         verify(view).drawMovieDetails(movie);
         verify(view, never()).showError();
     }
 
     @Test
     public void testLoadingInitDetails_error() throws Exception {
+        //Given
         when(model.getMovieDetailsStream()).thenReturn(Observable.error(new IllegalArgumentException("Some exception")));
         presenter.bindView(view);
 
+        //When
         presenter.loadInitialData(MOVIE_ID);
 
+        //Then
         verify(view, never()).drawMovieDetails(movie);
         verify(view).showError();
     }

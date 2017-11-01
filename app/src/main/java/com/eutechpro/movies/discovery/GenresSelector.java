@@ -4,12 +4,14 @@ package com.eutechpro.movies.discovery;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.eutechpro.movies.Genre;
+import com.eutechpro.movies.data.Genre;
 import com.eutechpro.movies.R;
-import com.eutechpro.movies.common.ResourcesUtil;
+import com.eutechpro.movies.utils.ResourcesUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,6 +23,8 @@ public class GenresSelector extends android.support.v7.widget.AppCompatSpinner {
     private static final String TAG = "GenresSelector";
     private OnGenreSelectedListener onGenreSelectedListener;
     private List<Genre>             genres;
+    private Genre                   selectedGenre;
+    private boolean                 userSelected;
 
     public GenresSelector(Context context) {
         super(context);
@@ -48,31 +52,52 @@ public class GenresSelector extends android.support.v7.widget.AppCompatSpinner {
     }
 
     private void init() {
-        setEnabled(false);
+        initData();
+
+        initTouchListener();
+
+        initSelectionListener();
+    }
+
+    private void initData() {
         genres = new Gson().fromJson(ResourcesUtil.readFromRawFile(R.raw.genres, getResources()), new TypeToken<List<Genre>>() {
         }.getType());
 
-        List<String> dataSet = generateDataSet(genres);
-        ArrayAdapter<String> dataAdapter =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, dataSet);
+        List<String>         dataSet     = generateDataSet(genres);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, dataSet);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         setAdapter(dataAdapter);
+    }
 
+    private void initTouchListener() {
+        setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                view.performClick();
+                userSelected = true;
+            }
+            return false;
+        });
+    }
+
+    private void initSelectionListener() {
         setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, android.view.View view, int position, long id) {
-                if (onGenreSelectedListener == null || view == null){
+                if (!userSelected){
                     return;
                 }
-                if (!isEnabled()){
-                    setEnabled(true);
+                userSelected = false;
+
+                if (onGenreSelectedListener == null){
+                    Log.e(TAG, "onItemSelected: ", new IllegalStateException("Unable to select value! There is no instance of OnYearSelectedListener assigned!"));
                     return;
                 }
                 if (position == 0){
-                    onGenreSelectedListener.genreSelected(null);
+                    selectedGenre = null;
                 } else {
-                    onGenreSelectedListener.genreSelected(genres.get(position - 1));
+                    selectedGenre = genres.get(position - 1);
                 }
+                onGenreSelectedListener.genreSelected(selectedGenre);
             }
 
             @Override
@@ -85,7 +110,7 @@ public class GenresSelector extends android.support.v7.widget.AppCompatSpinner {
     @NonNull
     private List<String> generateDataSet(List<Genre> genres) {
         List<String> data = new ArrayList<>();
-        data.add("Select genre");
+        data.add(getContext().getString(R.string.genre_selector_default_value));
         for (Genre genre : genres) {
             data.add(genre.getGenreName());
         }
