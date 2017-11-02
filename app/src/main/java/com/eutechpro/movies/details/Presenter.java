@@ -13,8 +13,8 @@ class Presenter implements Mvp.Presenter {
     private static final String  IMDB_URL      = "http://www.imdb.com/title/";
     private static final boolean KEEP_ACTIVITY = false;
     private final CompositeDisposable          compositeDisposable;
-    private       Mvp.View                     view;
     private final Mvp.Model                    model;
+    private       Mvp.View                     view;
     private       MvpPresenterActivityCallback activityCallback;
 
     public Presenter(Mvp.Model model) {
@@ -57,16 +57,16 @@ class Presenter implements Mvp.Presenter {
         activityCallback.openActivity(browserIntent, KEEP_ACTIVITY);
     }
 
-    @Override
-    public void openImdbPage(String imdbId) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(normaliseUrl(IMDB_URL + imdbId)));
-        activityCallback.openActivity(browserIntent, KEEP_ACTIVITY);
-    }
-
     private String normaliseUrl(String url) {
         if (!url.startsWith("http://") && !url.startsWith("https://")){
             return "http://" + url;
         }
         return url;
+    }
+
+    @Override
+    public void openImdbPage(String imdbId) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(normaliseUrl(IMDB_URL + imdbId)));
+        activityCallback.openActivity(browserIntent, KEEP_ACTIVITY);
     }
 }
