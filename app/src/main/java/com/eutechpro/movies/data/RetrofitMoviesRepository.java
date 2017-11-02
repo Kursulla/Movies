@@ -1,5 +1,7 @@
 package com.eutechpro.movies.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,15 +24,7 @@ public class RetrofitMoviesRepository implements MoviesRepository {
 
     @Override
     public Observable<List<Movie>> fetchMovies(int year, int genreId, @Sort.Type String sortType, int page) {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put(SORT_BY_KEY, sortType);
-        if (year != 0){
-            parameters.put(YEAR_KEY, String.valueOf(year));
-        }
-        if (genreId != 0){
-            parameters.put(GENRE_KEY, String.valueOf(genreId));
-        }
-        parameters.put(PAGE_KEY, String.valueOf(page));
+        Map<String, String> parameters = generateFilteringParameters(year, genreId, sortType, page);
 
         return api.fetchMovies(parameters)
                 .subscribeOn(Schedulers.io())
@@ -42,5 +36,20 @@ public class RetrofitMoviesRepository implements MoviesRepository {
         return api
                 .fetchMovieDetails(movieId)
                 .subscribeOn(Schedulers.io());
+    }
+
+
+    @NonNull
+    private Map<String, String> generateFilteringParameters(int year, int genreId, @Sort.Type String sortType, int page) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put(SORT_BY_KEY, sortType);
+        if (year != 0){
+            parameters.put(YEAR_KEY, String.valueOf(year));
+        }
+        if (genreId != 0){
+            parameters.put(GENRE_KEY, String.valueOf(genreId));
+        }
+        parameters.put(PAGE_KEY, String.valueOf(page));
+        return parameters;
     }
 }

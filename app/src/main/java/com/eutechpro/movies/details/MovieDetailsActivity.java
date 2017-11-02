@@ -6,9 +6,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.eutechpro.movies.BaseActivity;
+import com.eutechpro.movies.MoviesApplication;
 import com.eutechpro.movies.R;
-import com.eutechpro.movies.data.RetrofitMoviesRepository;
-import com.eutechpro.movies.data.RetrofitWebApi;
 
 public class MovieDetailsActivity extends BaseActivity {
     private static final String TAG          = "MovieDetailsActivity";
@@ -25,8 +24,9 @@ public class MovieDetailsActivity extends BaseActivity {
             Log.e(TAG, "onCreate: ", new IllegalArgumentException("Bad MovieId"));
             return;
         }
+        MoviesApplication.getDetailsComponent().inject(this);
         if (getLastCustomNonConfigurationInstance() == null){
-            presenter = new Presenter(new Model(new RetrofitMoviesRepository(new RetrofitWebApi())));
+            presenter = MoviesApplication.getDetailsComponent().getPresenter();
         } else {
             presenter = (Mvp.Presenter) getLastCustomNonConfigurationInstance();
         }

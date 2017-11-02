@@ -3,8 +3,7 @@ package com.eutechpro.movies.discovery;
 import android.os.Bundle;
 
 import com.eutechpro.movies.BaseActivity;
-import com.eutechpro.movies.data.RetrofitMoviesRepository;
-import com.eutechpro.movies.data.RetrofitWebApi;
+import com.eutechpro.movies.MoviesApplication;
 
 public class DiscoveryActivity extends BaseActivity {
 
@@ -16,9 +15,9 @@ public class DiscoveryActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MoviesApplication.getDiscoveryComponent().inject(this);
         if (getLastCustomNonConfigurationInstance() == null){
-            presenter = new Presenter(new Model(new RetrofitMoviesRepository(new RetrofitWebApi())));
+            presenter = MoviesApplication.getDiscoveryComponent().getPresenter();
         } else {
             presenter = (Mvp.Presenter) getLastCustomNonConfigurationInstance();
         }
