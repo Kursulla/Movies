@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">Movies</string>
     
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--Discovery domain-->
+    <string name="discovery_error_loading">There was an error in loading data</string>
     
-    <string name="action_settings">Settings</string>
+    
+    <!-- Details domain-->
+    <string name="details_duration_lbl">Duration:</string>
+    <string name="details_overview_lbl">Overview:</string>
+    <string name="details_release_date_lbl">Release date:</string>
+    <string name="details_genres_lbl">Genres:</string>
+    <string name="details_error_toast">Unable to get details. Please, try again</string>
+    <string name="details_release_date_format">MMMM, yyyy</string>
+    <string name="details_duration_format">%02d:%02d</string>
+    
+    
+    <!--Year selector-->
+    <string name="year_selector_default_value">Select year</string>
+    
+    <!--Genre selector-->
+    <string name="genre_selector_default_value">Select genre</string>
+    <string name="details_loading_label">Loading...</string>
+
+
 </resources>

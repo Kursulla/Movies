@@ -8,10 +8,11 @@ android {
         applicationId "com.eutechpro.movies"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
+        versionCode 4
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -42,9 +43,13 @@ dependencies {
     
     //Retrofit + Gson
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation "com.google.code.gson:gson:2.8.2"
+    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    //Dagger2
+    compile 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.2.0'
@@ -56,13 +61,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // Mockito
-    androidTestCompile "org.mockito:mockito-core:2.10.0"
-    androidTestCompile "org.mockito:mockito-android:2.10.0"
+    androidTestImplementation "org.mockito:mockito-core:2.10.0"
+    androidTestImplementation "org.mockito:mockito-android:2.10.0"
     testImplementation "org.mockito:mockito-core:2.10.0"
 
     //Espresso
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.1"
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
 }
 
 
