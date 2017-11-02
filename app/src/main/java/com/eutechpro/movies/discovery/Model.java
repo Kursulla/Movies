@@ -58,10 +58,14 @@ class Model implements Mvp.Model {
 
     @Override
     public void filterByGenre(Genre genre) {
-        if (genre == null || this.genreId == genre.getGenreId()){
+        if (genre == null){
+            this.genreId = 0;
+        } else if (this.genreId == genre.getGenreId()){
             return;
+        } else {
+            this.genreId = genre.getGenreId();
         }
-        this.genreId = genre.getGenreId();
+
         this.page = 1;
         fetchMovies();
     }
