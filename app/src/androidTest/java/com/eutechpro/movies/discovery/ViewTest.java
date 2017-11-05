@@ -32,7 +32,9 @@ import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewTest {
@@ -136,11 +138,10 @@ public class ViewTest {
 
 
     private Movie generateMovieEntity(int index) {
-        Movie movie = new Movie();
-        movie.setId(index);
-        movie.setOriginalTitle("testTitle_" + index);
-        movie.setVoteAverage(1.1 + index);
-        movie.setPosterPath("http://some_path.jpg");
+        Movie movie = mock(Movie.class);
+        when(movie.getId()).thenReturn(index);
+        when(movie.getOriginalTitle()).thenReturn("testTitle_" + index);
+        when(movie.getVoteAverage()).thenReturn(1.1 + index);
 
         return movie;
     }

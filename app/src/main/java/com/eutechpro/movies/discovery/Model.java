@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
@@ -79,30 +78,27 @@ class Model implements Mvp.Model {
     public void loadNextPage() {
         page++;
         repository.fetchMovies(year, genreId, sortType, page)
-                .subscribe(movies -> {
-                    fetchedMovies.addAll(movies);
-                    moviesStream.onNext(fetchedMovies);
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG, "accept: ", throwable);
-                        moviesStream.onError(new IllegalStateException("Unable to load next page: " + throwable.getMessage()));
-                    }
+                .subscribe(
+                        movies -> {
+                            fetchedMovies.addAll(movies);
+                            moviesStream.onNext(fetchedMovies);
+                        },
+                        throwable -> {
+                            Log.e(TAG, "accept: ", throwable);
+                            moviesStream.onError(new IllegalStateException("Unable to load next page: " + throwable.getMessage()));
                 });
     }
 
     private void fetchMovies() {
         repository.fetchMovies(year, genreId, sortType, page)
-                .subscribe(movies -> {
-                    fetchedMovies.clear();
-                    fetchedMovies.addAll(movies);
-                    moviesStream.onNext(fetchedMovies);
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG, "accept: ", throwable);
-                        moviesStream.onError(new IllegalStateException("Unable to load movies: " + throwable.getMessage()));
-                    }
-                });
+                .subscribe(
+                        movies -> {
+                            fetchedMovies.clear();
+                            fetchedMovies.addAll(movies);
+                            moviesStream.onNext(fetchedMovies);
+                        }, throwable -> {
+                            Log.e(TAG, "accept: ", throwable);
+                            moviesStream.onError(new IllegalStateException("Unable to load movies: " + throwable.getMessage()));
+                        });
     }
 }

@@ -3,7 +3,7 @@
     
     <!--Discovery domain-->
     <string name="discovery_error_loading">There was an error in loading data</string>
-    
+    <string name="discovery_content_desc_list_item_image">Image that represents movie in the list</string>
     
     <!-- Details domain-->
     <string name="details_duration_lbl">Duration:</string>
@@ -13,14 +13,15 @@
     <string name="details_error_toast">Unable to get details. Please, try again</string>
     <string name="details_release_date_format">MMMM, yyyy</string>
     <string name="details_duration_format">%02d:%02d</string>
-    
+    <string name="details_loading_label">Loading…</string>
+    <string name="details_content_desc_big_movie_image">Big movie image</string>
+    <string name="details_content_desc_open_homepage">Button to open homepage of this movie</string>
+    <string name="details_content_desc_open_imdb">Button to open IMDB page of this movie</string>
     
     <!--Year selector-->
     <string name="year_selector_default_value">Select year</string>
     
     <!--Genre selector-->
     <string name="genre_selector_default_value">Select genre</string>
-    <string name="details_loading_label">Loading...</string>
-
 
 </resources>

@@ -6,9 +6,6 @@ import com.eutechpro.movies.BaseActivity;
 import com.eutechpro.movies.MoviesApplication;
 
 public class DiscoveryActivity extends BaseActivity {
-
-    public static final String TAG = "DiscoveryActivity";
-
     private Mvp.Presenter presenter;
     private Mvp.View      view;
 

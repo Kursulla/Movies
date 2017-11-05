@@ -5,8 +5,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.eutechpro.movies.BaseActivity;
-import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.R;
+import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.mvp.MvpViewActivityCallback;
 
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.List;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
  class View implements Mvp.View {
-     private static final String  TAG                         = "View";
      private static final int     NUMBER_OF_COLUMN_PORTRAIT   = 2;
      private static final int     NUMBER_OF_COLUMNS_LANDSCAPE = 4;
      private static final boolean DO_NO_KILL_ACTIVITY         = false;

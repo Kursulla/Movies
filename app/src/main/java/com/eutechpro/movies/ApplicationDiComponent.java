@@ -17,7 +17,7 @@ public interface ApplicationDiComponent {
     @dagger.Module
     @ApplicationScope
     class Module {
-        private Context context;
+        private final Context context;
 
         Module(Context context) {
             this.context = context;

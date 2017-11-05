@@ -1,12 +1,10 @@
 package com.eutechpro.movies.discovery;
 
 
-import android.app.Activity;
-
 import com.eutechpro.movies.data.Genre;
 import com.eutechpro.movies.data.Movie;
-import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
+import com.eutechpro.movies.mvp.BaseMvpPresenter;
+import com.eutechpro.movies.mvp.BaseMvpView;
 
 import java.util.List;
 
@@ -51,24 +49,7 @@ interface Mvp {
         void changeSortOrder(String sortType);
     }
 
-    interface View {
-        /** We need to bind View with a Presenter in order to have Bi-Directional communication. */
-        void bindPresenter(Presenter presenter);
-
-        /**
-         * Bind this view with instance of {@link MvpViewActivityCallback}.
-         * <br/>
-         * That will enrich the View with possibilities of drawing different Android UI components
-         *
-         * @param activityCallback Instance of MvpActivityCallback
-         */
-        void bindActivityCallback(MvpViewActivityCallback activityCallback);
-
-        /**
-         * Unbind all things that might cause mem leaks.
-         */
-        void unBind();
-
+    interface View extends BaseMvpView<Mvp.Presenter> {
         /**
          * Draw movies in View.
          *
@@ -82,19 +63,7 @@ interface Mvp {
         void showError();
     }
 
-    interface Presenter {
-        /** We need to bind Presenter with a View in order to have Bi-Directional communication. */
-        void bindView(View view);
-
-        /**
-         * We might need to reach to the {@link Activity} from a Presenter.
-         *
-         * @param activityCallback Callback to reach Activity from a presenter.
-         */
-        void bindActivityCallback(MvpPresenterActivityCallback activityCallback);
-
-        /** Unbind all things that might cause mem leaks. */
-        void unBind();
+    interface Presenter extends BaseMvpPresenter<Mvp.View> {
 
         void loadInitialData();
 
