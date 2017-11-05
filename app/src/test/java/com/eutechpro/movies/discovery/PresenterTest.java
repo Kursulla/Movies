@@ -135,11 +135,6 @@ public class PresenterTest {
 //        verify(view).drawMovies(movies);
     }
 
-    @Test
-    public void openMovieDetails() throws Exception {
-        //todo
-    }
-
     @After
     public void tearDown() throws Exception {
         RxAndroidPlugins.reset();

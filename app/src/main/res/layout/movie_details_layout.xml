@@ -34,6 +34,7 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="pin"
+                android:contentDescription="@string/details_content_desc_big_movie_image"
                 tools:src="@drawable/movie_list_item_placeholder"
                 />
             
@@ -75,6 +76,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/details_homepage_icon"
+                android:contentDescription="@string/details_content_desc_open_homepage"
                 />
         
             <ImageView
@@ -89,6 +91,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/details_imdb_icon"
+                android:contentDescription="@string/details_content_desc_open_imdb"
                 />
         
             <TextView
@@ -178,7 +181,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/genres_lbl"
                 app:layout_constraintTop_toBottomOf="@+id/year"
-                tools:text="Familly, Comedy, Drama"
+                tools:text="Family, Comedy, Drama"
                 />
         
         

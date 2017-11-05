@@ -9,7 +9,7 @@ import io.reactivex.Single;
 /**
  * API for communication with "Discovery" endpoints of TheMovieDb service.
  */
-public interface WebApi {
+interface WebApi {
     /**
      * API call for fetching list of {@link Movie} searched by different parameters.<br/>
      * <b>Parameters</b> interesting for this use case are:

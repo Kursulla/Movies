@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitFactory {
+class RetrofitFactory {
     private static final String BASE_URL_DEBUG      = "http://api.themoviedb.org/3/";
     private static final String BASE_URL_PRODUCTION = "https://api.themoviedb.org/3/";
     private static final String API_KEY_KEY         = "api_key";//What a retarded name!

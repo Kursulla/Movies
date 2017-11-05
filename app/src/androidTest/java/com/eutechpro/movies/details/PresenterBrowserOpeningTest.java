@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.eutechpro.movies.data.Movie;
 import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
 
 import org.junit.Before;
@@ -20,16 +19,12 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 public class PresenterBrowserOpeningTest {
-    public static final String TEST_HOMEPAGE_URL     = "http://test_url";
-    public static final String EXPECTED_HOMEPAGE_URL = "http://test_url";
-    public static final String TEST_IMDB_ID          = "test_imdb_id";
-    public static final String EXPECTED_IMDB_URL     = "http://www.imdb.com/title/test_imdb_id";
-    @Mock
-    private Mvp.View                     view;
+    private static final String TEST_HOMEPAGE_URL     = "http://test_url";
+    private static final String EXPECTED_HOMEPAGE_URL = "http://test_url";
+    private static final String TEST_IMDB_ID          = "test_imdb_id";
+    private static final String EXPECTED_IMDB_URL     = "http://www.imdb.com/title/test_imdb_id";
     @Mock
     private Mvp.Model                    model;
-    @Mock
-    private Movie                        movie;
     @Mock
     private MvpPresenterActivityCallback callback;
 

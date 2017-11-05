@@ -29,9 +29,7 @@ class Presenter implements Mvp.Presenter {
         Disposable disposable = this.model.getMoviesStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        movies -> {
-                            view.drawMovies(movies);
-                        },
+                        view::drawMovies,
                         throwable -> view.showError()
                 );
         compositeDisposable.add(disposable);

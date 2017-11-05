@@ -7,8 +7,8 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 class Model implements Mvp.Model {
-    private MoviesRepository      repository;
-    private PublishSubject<Movie> detailsStream;
+    private final MoviesRepository      repository;
+    private final PublishSubject<Movie> detailsStream;
     private Movie                 fetchedMovie;
 
 
