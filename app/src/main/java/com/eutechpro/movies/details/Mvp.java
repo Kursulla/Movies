@@ -1,11 +1,9 @@
 package com.eutechpro.movies.details;
 
 
-import android.app.Activity;
-
 import com.eutechpro.movies.data.Movie;
-import com.eutechpro.movies.mvp.MvpPresenterActivityCallback;
-import com.eutechpro.movies.mvp.MvpViewActivityCallback;
+import com.eutechpro.movies.mvp.BaseMvpPresenter;
+import com.eutechpro.movies.mvp.BaseMvpView;
 
 import io.reactivex.Observable;
 
@@ -22,28 +20,7 @@ interface Mvp {
         void loadInitialData(long movieId);
     }
 
-    interface View {
-        /**
-         * Bind Presenter to the View so we have bi-directional communication.
-         *
-         * @param presenter Presenter to bind to.
-         */
-        void bindPresenter(Presenter presenter);
-
-        /**
-         * Bind this view with instance of {@link MvpViewActivityCallback}.
-         * <br/>
-         * That will enrich the View with possibilities of drawing different Android UI components
-         *
-         * @param activityCallback Instance of MvpActivityCallback
-         */
-        void bindActivityCallback(MvpViewActivityCallback activityCallback);
-
-        /**
-         * Unbind all things that might cause mem leaks.
-         */
-        void unBind();
-
+    interface View extends BaseMvpView<Mvp.Presenter> {
         /**
          * Show details about fetched {@link Movie} data set
          *
@@ -57,20 +34,7 @@ interface Mvp {
         void showError();
     }
 
-    interface Presenter {
-        /** We need to bind Presenter with a View in order to have Bi-Directional communication. */
-        void bindView(View view);
-
-        /**
-         * We might need to reach to the {@link Activity} from a Presenter.
-         *
-         * @param activityCallback Callback to reach Activity from a presenter.
-         */
-        void bindActivityCallback(MvpPresenterActivityCallback activityCallback);
-
-        /** Unbind all things that might cause mem leaks. */
-        void unBind();
-
+    interface Presenter extends BaseMvpPresenter<Mvp.View> {
         /**
          * Load initial data of targeted {@link Movie}
          *
@@ -88,7 +52,7 @@ interface Mvp {
         /**
          * Open default browser with IMDB page that has details about provided movie;
          *
-         * @param url URL to open in default browser.
+         * @param imdbId IMDB id of a movie
          */
         void openImdbPage(String imdbId);
     }
